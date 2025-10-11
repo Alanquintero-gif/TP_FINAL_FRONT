@@ -1,0 +1,148 @@
+.layout-wpp {
+  display: flex;
+  height: 100vh;
+  background-color: #242626;
+  color: white;
+
+}
+
+.sidebar {
+  width: 30%;
+  border-right: 1px solid #444;
+  overflow-y: auto;
+  background-color: #161717;
+  padding: 20px;
+
+}
+
+.main-chat {
+  flex: 1;
+  overflow-y: auto;
+
+}
+
+@media (max-width: 1100px) {
+  .sidebar {
+    width: 35%;
+  }
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 40%;
+  }
+}
+
+@media (max-width: 768px) {
+  .layout-wpp {
+    flex-direction: row; 
+  }
+
+  .sidebar {
+    width: 45%;
+    padding: 12px;
+    border-bottom: none;
+    border-right: 1px solid #444;
+  }
+
+  .main-chat {
+    flex: 1;
+
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 40%;
+    padding: 8px;
+  }
+
+
+}
+.hidden {
+  display: none;
+}
+
+.mobile-full {
+  width: 100% !important;
+
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  margin: 10px 0 0 10px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background-color: #242626;
+}
+
+.back-button:hover {
+  background-color: #3a4b52;
+}
+
+.mobile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #161717;
+  padding: 10px;
+  height: 64px;
+  position: sticky;
+  top: 0px;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.contact-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-info .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.contact-info .avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #444;
+}
+.contact-name {
+  font-weight: bold;
+  color: white;
+  font-size: 16px;
+}
+
+.header-icons span {
+  margin-left: 10px;
+  font-size: 18px;
+  color: white;
+  opacity: 0.8;
+  cursor: default;
+}
+
+.contact-info-link {
+  text-decoration: none;
+  color: inherit;
+  flex: 1;
+}
+
+.contact-info-link:hover .contact-name {
+  color: #25d366;
+}

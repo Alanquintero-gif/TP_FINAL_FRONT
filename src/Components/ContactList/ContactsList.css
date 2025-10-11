@@ -1,0 +1,118 @@
+.contacts-list-container {
+    width: 100%;
+    height: 100%;
+    background-color: #161717;
+}
+
+.contacts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 15px;
+}
+
+.app-title {
+    font-size: 20px;
+    margin: 0;
+    margin-left: 3px;
+    color: white;
+}
+
+.menu-button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 7px;
+    border-radius: 20%;
+    transition: background-color 0.2s ease;
+}
+
+.menu-button:hover {
+    background-color: #242626;
+}
+
+.search-container {
+    padding: 10px 15px;
+    margin-bottom: 15px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    background-color: #242626;
+    color: white;
+    font-size: 14px;
+}
+
+.search-input::placeholder {
+    color:rgb(202, 188, 188);
+}
+
+@media (max-width: 1100px) {
+    .contacts-list-container {
+      padding: 0 10px;
+    }
+  
+    .contacts-header {
+      padding: 0 10px;
+    }
+  
+    .app-title {
+      font-size: 18px;
+    }
+  
+    .menu-button {
+      font-size: 18px;
+    }
+  
+    .search-input {
+      font-size: 13px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .app-title {
+      font-size: 20px;
+    }
+    .contacts-header {
+      padding: 0 10px;
+    }
+  
+    .menu-button {
+      font-size: 15px;
+    }
+  
+    .search-container {
+      padding: 6px;
+      margin-bottom: 10px;
+    }
+  
+    .search-input {
+      padding: 8px 10px;
+      font-size: 13px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .contacts-header {
+      padding: 10px 15px;
+    }
+  
+    .app-title {
+      font-size: 20px;
+    }
+  
+    .menu-button {
+      padding: 4px;
+    }
+  
+    .search-input {
+      font-size: 12px;
+    }
+  }

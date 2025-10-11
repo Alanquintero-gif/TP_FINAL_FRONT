@@ -1,0 +1,292 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+
+
+.app {
+  font-size: 20px;
+  background-image: url('./fondo-wpp.jpg');
+  background-repeat: repeat;
+  background-size: 200px; 
+  background-position: top left;
+  background-attachment: fixed;
+  
+  padding-top: 40px;
+  min-height: 100%;
+  width: 100%;
+  color: white;
+}
+
+h2 {
+  text-align: center;
+  color: white;
+  letter-spacing: 2px;
+
+
+}
+
+.contenedor-mensajes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  width: 100%;
+  padding-bottom: 80px;
+}
+
+
+.mensaje {
+  display: flex;
+  max-width: 40%;
+  animation: fadeIn 0.3s ease-out;  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+.mensaje.izquierda {
+  justify-content: flex-start;
+}
+
+
+.mensaje.derecha {
+  justify-content: flex-end;
+  align-self: flex-end;
+}
+
+.boton-eliminar {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 12px;
+  background-color: #ff4d4f;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.burbuja:hover .boton-eliminar {
+  opacity: 1;
+}
+
+.boton-eliminar:hover {
+  background-color: #ff7875;
+  transform: scale(1.05);
+}
+
+.burbuja {
+  background-color: #15603E;
+  padding: 10px 15px;
+  border-radius: 10px;
+  position: relative;
+  width: 500px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin: 0px 20px;
+  overflow-wrap: break-word;
+
+    width: 100%;
+    max-width: 500px;
+    min-width: 150px;
+  
+}
+
+.mensaje.izquierda .burbuja {
+  background-color: #242626;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 5px;
+  gap: 5px;
+}
+
+.hora {
+  font-size: 12px;
+  color: #999;
+}
+
+.estado {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.form {
+  position: fixed;
+  bottom: 3px;
+  right: 0px;
+  background-color: transparent;
+  padding: 10px 20px;
+  display: flex;
+  gap: 10px;
+  width: 70%;
+}
+
+.form input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  background-color: #242626;
+  color: white;
+  height: 40px;
+}
+
+.form input::placeholder {
+  color: rgb(202, 188, 188);
+}
+
+.form button {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  background-color: #15603E;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  height: 40px;
+}
+
+.form button:hover {
+  background-color: #22d564; 
+  color: white;
+}
+
+
+@media (max-width: 1100px) {
+  .burbuja {
+    width: 400px;
+  }
+  .form {
+    width: 65%;
+  }
+}
+
+@media (max-width: 900px) {
+  .burbuja {
+    width: 100%;
+  }
+  .form {
+    width: 60%;
+  }
+
+}
+
+
+
+@media (max-width: 768px) {
+  .app {
+    padding: 15px;
+    font-size: 18px;
+    background-size: 140px;
+  }
+
+  .contenedor-mensajes {
+    gap: 10px;
+    padding-bottom: 100px;
+    margin-top: 45px;
+
+  }
+
+  .burbuja {
+    max-width: 95%;
+    font-size: 18px;
+    padding: 12px 16px;
+    margin: 0 10px;
+  }
+
+  .boton-eliminar {
+    font-size: 11px;
+    padding: 4px 7px;
+    top: -8px;
+    right: -8px;
+  }
+
+  .form {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    gap: 8px;
+  }
+
+  .form input,
+  .form button {
+    font-size: 15px;
+    height: 38px;
+  }
+
+  .form button {
+    padding: 8px 14px;
+  }
+
+  .info {
+    font-size: 12px;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .burbuja {
+    max-width: 95%;
+    font-size: 16px;
+    padding: 10px 14px;
+  }
+
+  .form input {
+    font-size: 15px;
+    padding: 10px;
+    height: 36px;
+  }
+
+  .form button {
+    padding: 8px 12px;
+    font-size: 15px;
+    height: 36px;
+  }
+
+  .info {
+    font-size: 11px;
+  }
+
+  .boton-eliminar {
+    font-size: 11px;
+    padding: 4px 7px;
+  }
+}
+
+@media (max-width: 320px) {
+  .burbuja {
+    max-width: 98%;
+    font-size: 15px;
+    padding: 10px 12px;
+  }
+
+  .form input,
+  .form button {
+    font-size: 14px;
+    height: 34px;
+  }
+
+  .form {
+    padding: 8px 12px;
+    gap: 6px;
+  }
+
+  .info {
+    font-size: 10px;
+  }
+}
