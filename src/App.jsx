@@ -31,22 +31,23 @@ function App() {
 
   return (
     <Routes>
-      {/* Siempre que caigas en '/', te llevo al login */}
+      {/* raíz -> login */}
       <Route path="/" element={<Navigate to="/login" replace />} />
-
-      {/* Públicas */}
+      {/* públicas */}
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/register" element={<RegisterScreen />} />
 
-      {/* Protegidas (todo el app vive bajo /app) */}
+      {/* protegidas */}
       <Route element={<AuthMiddleware />}>
         <Route path="/app" element={<LayoutWpp />}>
+          <Route index element={<div style={{padding:24}} />} />
           <Route path="chat/:id" element={<ContactDetailScreen />} />
           <Route path="contact-info/:id" element={<ContactInfoScreen />} />
         </Route>
       </Route>
 
-      {/* Catch-all */}
+      {/* catch-all */}
+      <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   )
 }
