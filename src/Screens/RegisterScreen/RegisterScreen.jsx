@@ -99,6 +99,9 @@ const RegisterScreen = () => {
           <span>¿Ya tenés cuenta?</span>
           <Link to="/login" className="auth-link">Iniciar sesión</Link>
         </div>
+                          <div className='auth-footer'>
+          <Link to="/forgot-password" className="auth-link">¿Olvidaste tu contraseña?</Link>
+        </div>
       </div>
     </div>
   )

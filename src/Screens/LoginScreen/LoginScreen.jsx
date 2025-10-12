@@ -6,6 +6,8 @@ import { useNavigate, Link } from 'react-router-dom'
 import './Auth.css' // <-- nuevo CSS compartido
 import { FaWhatsapp } from "react-icons/fa"; 
 
+
+
 const FORM_FIELDS = {
   EMAIL: 'email',
   PASSWORD: 'password'
@@ -97,6 +99,9 @@ export const LoginScreen = () => {
           <span>¿No tenés cuenta?</span>
           <Link to="/register" className="auth-link">Crear una cuenta</Link>
         </div>
+                  <div className='auth-footer'>
+  <Link to="/forgot-password" className="auth-link">¿Olvidaste tu contraseña?</Link>
+</div>
       </div>
     </div>
   )

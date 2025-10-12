@@ -7,6 +7,8 @@ import LayoutWpp from './Screens/MainScreen/LayoutWpp'
 import ContactDetailScreen from './Screens/ContactDetailScreen/ContactDetailScreen'
 import Loader from './Components/Loader/Loader'
 import ContactInfoScreen from './Components/ContactInfoScreen/ContactInfoScreen'
+import ForgotPasswordScreen from './Screens/Auth/ForgotPasswordScreen';
+import ResetPasswordScreen from './Screens/Auth/ResetPasswordScreen';
 
 const LayoutEmpty = () => (
   <div style={{ padding: 24 }}>
@@ -36,6 +38,8 @@ function App() {
       {/* públicas */}
       <Route path="/login" element={<LoginScreen />} />
       <Route path="/register" element={<RegisterScreen />} />
+      <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
+      <Route path="/reset-password" element={<ResetPasswordScreen />} />
 
       {/* protegidas */}
       <Route element={<AuthMiddleware />}>
