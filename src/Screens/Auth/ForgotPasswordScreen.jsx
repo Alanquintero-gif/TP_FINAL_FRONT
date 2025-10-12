@@ -15,15 +15,15 @@ export default function ForgotPasswordScreen() {
 
     setLoading(true);
     try {
-      const response = await fetch(`${ENVIRONMENT.URL_API}/api/auth/forgot-password`, {
+      const res = await fetch(`${ENVIRONMENT.URL_API}/api/auth/forgot-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-      await response.json();
+      await res.json(); // respuesta genérica
       setSent(true);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -32,27 +32,30 @@ export default function ForgotPasswordScreen() {
   if (loading) return <Loader />;
 
   return (
-    <div className="auth-container">
-      <div className="auth-box">
-        <h2 className="auth-title">Recuperar contraseña</h2>
+    <div className="pw-container">
+      <div className="pw-card">
+        <h2 className="pw-title">Recuperar contraseña</h2>
+
         {sent ? (
-          <p style={{ color: "#25d366" }}>
+          <p className="pw-info">
             Si el correo existe, te enviamos un enlace para restablecer tu contraseña.
           </p>
         ) : (
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="auth-form">
             <input
+              className="form-input"
               type="email"
               placeholder="Correo electrónico"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <button type="submit">Enviar enlace</button>
+            <button type="submit" className="auth-button">Enviar enlace</button>
           </form>
         )}
+
         <div className="auth-footer">
-          <Link to="/login">Volver al inicio de sesión</Link>
+          <Link className="auth-link" to="/login">Volver al inicio de sesión</Link>
         </div>
       </div>
     </div>
