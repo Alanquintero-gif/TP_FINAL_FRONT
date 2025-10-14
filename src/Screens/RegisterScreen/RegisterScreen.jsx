@@ -3,7 +3,7 @@ import useForm from '../../hooks/useForm'
 import { register } from '../../services/authService'
 import useFetch from '../../hooks/useFetch'
 import { Link } from 'react-router-dom'
-import './../LoginScreen/Auth.css' // <-- mismo CSS
+import './../LoginScreen/Auth.css' 
 import { FaWhatsapp } from "react-icons/fa"; 
 
 

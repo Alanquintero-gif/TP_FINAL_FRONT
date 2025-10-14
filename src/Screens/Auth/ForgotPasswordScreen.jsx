@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Loader from "../../Components/Loader/Loader";
 import ENVIRONMENT from "./../../config/environment";
-import './../LoginScreen/Auth.css' // <-- mismo CSS
+import './../LoginScreen/Auth.css' 
 
 export default function ForgotPasswordScreen() {
   const [email, setEmail] = useState("");
@@ -20,7 +20,7 @@ export default function ForgotPasswordScreen() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-      await res.json(); // respuesta genérica
+      await res.json(); 
       setSent(true);
     } catch (err) {
       console.error(err);

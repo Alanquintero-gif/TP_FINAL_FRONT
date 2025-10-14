@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import Loader from "../../Components/Loader/Loader";
 import ENVIRONMENT from "./../../config/environment";
-import './../LoginScreen/Auth.css' // <-- mismo CSS
+import './../LoginScreen/Auth.css' 
 
 export default function ResetPasswordScreen() {
   const [sp] = useSearchParams();
