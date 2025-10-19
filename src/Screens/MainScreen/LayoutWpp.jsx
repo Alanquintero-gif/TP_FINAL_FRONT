@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import ContactsList from "../../Components/ContactList/ContactsList";
-import { Outlet, useLocation, useNavigate, useMatch } from 'react-router-dom'; // <-- useMatch
+import { Outlet, useNavigate, useMatch } from 'react-router-dom';
 import './LayoutWpp.css';
 import { FcCallback, FcVideoCall } from "react-icons/fc";
 import { CiMenuBurger } from "react-icons/ci";
@@ -8,11 +8,16 @@ import { ContactContext } from "../../Context/ContactContext";
 import { ChatContext } from "../../Context/ChatContext";
 
 export default function LayoutWpp() {
-  const location = useLocation();
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
   const { contacts } = useContext(ContactContext);
-  const { contactoActivo } = useContext(ChatContext);
+  const { contactoActivo, loadConversations } = useContext(ChatContext);
+
+  // Cargar conversaciones reales al montar (una sola vez)
+  useEffect(() => {
+    loadConversations?.();
+  }, []);
 
   const contacto = contacts.find(c => c.name === contactoActivo);
 
@@ -24,17 +29,15 @@ export default function LayoutWpp() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // --- CLAVE: detección exacta de rutas hijas ---
+  // Rutas hijas
   const isChatRoute = !!useMatch('/app/chat/:id');
   const isContactInfoRoute = !!useMatch('/app/contact-info/:id');
 
   const handleBack = () => {
     if (isContactInfoRoute && contacto?.id != null) {
-      // volver al chat actual dentro de /app
       navigate(`/app/chat/${contacto.id}`);
     } else {
-      // volver al home del app (no a '/')
-      navigate('/app');
+      navigate('/app'); // ← siempre volvemos al inicio del app
     }
   };
 
@@ -44,7 +47,7 @@ export default function LayoutWpp() {
     }
   };
 
-  // Mostrar/ocultar contactos (usando los flags anteriores)
+  // Mostrar/ocultar contactos (mobile)
   const shouldShowContacts = () => {
     if (!isMobile) return true;
     return !isChatRoute && !isContactInfoRoute;
@@ -65,8 +68,8 @@ export default function LayoutWpp() {
               {isMobile && (
                 <button className="back-button" onClick={handleBack}>←</button>
               )}
-              <div 
-                className="contact-info" 
+              <div
+                className="contact-info"
                 onClick={handleContactInfo}
                 style={{ cursor: 'pointer', flex: 1 }}
               >

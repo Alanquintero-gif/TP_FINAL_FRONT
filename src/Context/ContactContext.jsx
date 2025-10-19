@@ -52,62 +52,7 @@ const ContactContextProvider = ({children}) => {
                   text: 'El futuro es nuestro por prepotencia de trabajo.'
                 },
                 unread_messages: 1
-              },
-              {
-                id: 5,
-                name: 'Alejandra Pizarnik',
-                last_time_connected: '16:01',
-                img: "https://www.cultura.gob.ar/media/uploads/alejandra-pizarnik.jpeg",
-                last_message: {
-                  id: 5,
-                  text: 'Yo moriría por vos. Vos, ¿vivirías por mi?'
-                },
-                unread_messages: 0
-              },
-              {
-                id: 6,
-                name: 'Rodolfo Walsh',
-                last_time_connected: '12:33',
-                img: "https://www.unter.org.ar/wp-content/uploads/2019/01/50133383_10155677221257691_8654150791231176704_n.jpg",
-                last_message: {
-                  id: 6,
-                  text: 'Sólo un débil mental puede no desear la paz'
-                },
-                unread_messages: 3
-              },
-              {
-                id: 7,
-                name: 'José Hernández',
-                last_time_connected: '11:11',
-                img: "https://upload.wikimedia.org/wikipedia/commons/2/22/Jos%C3%A9_Hern%C3%A1ndez_restored.jpg",
-                last_message: {
-                  id: 7,
-                  text: 'Los hermanos sean unidos...'
-                },
-                unread_messages: 0
-              },
-              {
-                id: 8,
-                name: 'Sarmiento',
-                last_time_connected: '19:45',
-                img: "https://www.vallemaria.gob.ar/sites/default/files/styles/imagen_destacada/public/sarmiento_01.jpg?itok=CWm3qQ3v",
-                last_message: {
-                  id: 8,
-                  text: 'Todos los problemas son problemas de educación. '
-                },
-                unread_messages: 1
-              },
-              {
-                id: 9,
-                name: 'Oliverio Girondo',
-                last_time_connected: '10:02',
-                img: "https://upload.wikimedia.org/wikipedia/commons/c/cc/Oliverio_girondo.jpg",
-                last_message: {
-                  id: 9,
-                  text: 'la costumbre nos teje diariamente una telaraña en las pupilas.'
-                },
-                unread_messages: 2
-              },
+              }
               
         ]
     )

@@ -1,24 +1,63 @@
 import ENVIRONMENT from "../config/environment";
+import * as authService from "./authService";
 
-const BASE = `${ENV.URL_API}/api/conversations`
+const API = ENVIRONMENT.URL_API;
 
-const authHeaders = () => ({
-  Authorization: `Bearer ${localStorage.getItem('auth_token') || ''}`
-})
+async function authedFetch(path, options = {}) {
+  const token =
+    authService.getToken?.() ||
+    localStorage.getItem("auth_token") ||
+    sessionStorage.getItem("auth_token") ||
+    "";
 
-export const listConversations = async () => {
-  const r = await fetch(BASE, { headers: authHeaders() })
-  if (!r.ok) throw new Error('No se pudieron cargar conversaciones')
-  return r.json()
+  const headers = {
+    "Content-Type": "application/json",
+    ...(options.headers || {}),
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
+
+  const res = await fetch(`${API}${path}`, { ...options, headers });
+
+  // Puede que no siempre haya body
+  let data = null;
+  try {
+    data = await res.json();
+  } catch {
+    /* ignore */
+  }
+
+  if (!res.ok) {
+    const message =
+      data?.message ||
+      (res.status === 401
+        ? "No hay header de autorizacion"
+        : `HTTP ${res.status}`);
+    throw new Error(message);
+  }
+  return data;
 }
 
-// participantId = _id del “usuario virtual” que representa a tu contacto fijo
-export const openConversation = async (participantId) => {
-  const r = await fetch(BASE, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...authHeaders() },
-    body: JSON.stringify({ participantId })
-  })
-  if (!r.ok) throw new Error('No se pudo abrir la conversación')
-  return r.json()
+/** Lista conversaciones del usuario logueado */
+export async function listConversations() {
+  const data = await authedFetch(`/api/conversations`, { method: "GET" });
+  // backend responde { ok, data: [...] }
+  return data?.data || [];
 }
+
+/** Abre (o crea) una conversación 1:1 con otro usuario */
+export async function openConversation(participantId) {
+  if (!participantId) throw new Error("participantId requerido");
+  const data = await authedFetch(`/api/conversations`, {
+    method: "POST",
+    body: JSON.stringify({ participantId }),
+  });
+  // backend responde { ok, data: {...} }
+  return data?.data || null;
+}
+
+const conversationsService = {
+  list: listConversations,
+  open: openConversation,
+};
+
+export default conversationsService;
