@@ -38,6 +38,11 @@ export function clearToken() {
   sessionStorage.removeItem(TOKEN_KEY);
 }
 
+export async function logout() {
+  clearToken();
+  return true;
+}
+
 // ===== Endpoints de auth =====
 export async function register(name, email, password) {
   const usuario = { email, username: name, password };
@@ -68,7 +73,7 @@ export async function login(email, password, { persist = true } = {}) {
   }
 
   // Si tu backend devuelve { token, user, ... } guardamos el token
-  const token = response_data?.token;
+  const token = response_data?.token || response_data?.authorization_token;
   if (token) setToken(token, persist);
 
   return response_data;
@@ -79,6 +84,7 @@ export default {
   getToken,
   setToken,
   clearToken,
+  logout,
   // endpoints
   register,
   login,
