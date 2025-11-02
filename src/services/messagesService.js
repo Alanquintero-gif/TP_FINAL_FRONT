@@ -42,7 +42,6 @@ export async function listMessages(conversationId) {
   const data = await authedFetch(`/api/messages/${conversationId}`, {
     method: "GET",
   });
-  // backend responde { ok, data: [...] }
   return data?.data || [];
 }
 
@@ -55,11 +54,21 @@ export async function sendMessage(conversationId, text) {
     method: "POST",
     body: JSON.stringify({ text }),
   });
-  // backend responde { ok, data: {...} }
   return data?.data || null;
 }
 
-/** Elimina (soft delete) un mensaje por id */
+/** Edita un mensaje existente */
+export async function editMessage(messageId, newText) {
+  if (!messageId) throw new Error("messageId requerido");
+  if (!newText?.trim()) throw new Error("Texto vacío");
+  const data = await authedFetch(`/api/messages/${messageId}`, {
+    method: "PUT",
+    body: JSON.stringify({ text: newText }),
+  });
+  return data?.data || null;
+}
+
+/** Elimina un mensaje */
 export async function deleteMessage(messageId) {
   if (!messageId) throw new Error("messageId requerido");
   await authedFetch(`/api/messages/${messageId}`, { method: "DELETE" });
@@ -69,6 +78,7 @@ export async function deleteMessage(messageId) {
 const messagesService = {
   list: listMessages,
   send: sendMessage,
+  edit: editMessage,
   remove: deleteMessage,
 };
 

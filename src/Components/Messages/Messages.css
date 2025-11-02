@@ -290,3 +290,63 @@ h2 {
     font-size: 10px;
   }
 }
+
+
+.boton-editar {
+  position: absolute;
+  top: -10px;
+  right: 65px;
+  font-size: 12px;
+  background-color: #2b7a4b;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.burbuja:hover .boton-editar {
+  opacity: 1;
+}
+
+.boton-editar:hover {
+  background-color: #1fd067;
+}
+
+.edicion-mensaje {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-editar {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  background-color: #242626;
+  color: white;
+}
+
+.botones-editar {
+  display: flex;
+  gap: 6px;
+}
+
+.botones-editar button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+.botones-editar .guardar {
+  background-color: #15603e;
+}
+
+.botones-editar .cancelar {
+  background-color: #555;
+}
