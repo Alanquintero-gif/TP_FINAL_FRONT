@@ -1,4 +1,3 @@
-// src/Components/ContactItem/ContactItem.jsx
 import React from "react";
 import { Link } from "react-router-dom";
 import "./ContactItem.css";
@@ -14,7 +13,6 @@ export default function ContactItem({
   onLogoutClick,
 }) {
   if (logoutItem) {
-    // Ítem especial "Cerrar sesión"
     return (
       <button
         className="contact-link"
@@ -30,7 +28,6 @@ export default function ContactItem({
       >
         <div className="contact-item">
           <img
-            // un icono simple tipo puerta/emote
             src={img || "https://cdn-icons-png.flaticon.com/512/1828/1828490.png"}
             alt="Cerrar sesión"
             className="contact-img"
@@ -59,7 +56,6 @@ export default function ContactItem({
     );
   }
 
-  // Modo normal (contacto común)
   return (
     <Link to={`/app/chat/${id}`} className="contact-link">
       <div className="contact-item">

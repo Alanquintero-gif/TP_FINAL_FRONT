@@ -11,9 +11,7 @@ import messagesService from "../services/messagesService";
 export const ChatContext = createContext();
 
 export function ChatProvider({ children }) {
-  // ============================
-  // ESTADO BACKEND REAL
-  // ============================
+
   const [conversations, setConversations] = useState([]); // lista de conversaciones del usuario logueado
   const [activeConversationId, setActiveConversationId] = useState(null); // _id de la conversación activa
   const [activeMessages, setActiveMessages] = useState([]); // mensajes de ESA conversación activa
@@ -21,9 +19,7 @@ export function ChatProvider({ children }) {
   const [fetchingConversations, setFetchingConversations] = useState(false);
   const [fetchingMessages, setFetchingMessages] = useState(false);
 
-  // ============================
-  // ESTADO LEGACY (UI original)
-  // ============================
+
   const [messages, setMessages] = useState({
     "Jorge Luis Borges": [
       {
@@ -148,7 +144,6 @@ export function ChatProvider({ children }) {
     ],
   });
 
-  // en legacy, contactoActivo es el nombre del contacto ("Julio Cortázar", etc)
   const [contactoActivo, setContactoActivo] = useState(null);
 
   // util para hora
@@ -158,11 +153,7 @@ export function ChatProvider({ children }) {
       minute: "2-digit",
     });
 
-  // ============================
-  // BACKEND: CONVERSACIONES
-  // ============================
 
-  // traer TODAS las conversaciones del usuario logueado
   const loadConversations = useCallback(async () => {
     setFetchingConversations(true);
     try {
@@ -175,7 +166,6 @@ export function ChatProvider({ children }) {
     }
   }, []);
 
-  // seleccionar una conversación como activa
   const selectConversation = useCallback((conversationId) => {
     const val = conversationId || null;
     setActiveConversationId(val);
@@ -185,13 +175,12 @@ export function ChatProvider({ children }) {
     }
   }, []);
 
-  // traer MENSAJES de una conversación y guardarlos en activeMessages
   const loadMessages = useCallback(async (conversationId) => {
     if (!conversationId) return;
     setFetchingMessages(true);
     try {
       const arr = await messagesService.list(conversationId); // GET /api/messages/:conversationId
-      setActiveMessages(arr || []); // <-- guarda array plano
+      setActiveMessages(arr || []); 
     } catch (err) {
       console.error("[chat] loadMessages", err);
       setActiveMessages([]);
@@ -200,11 +189,7 @@ export function ChatProvider({ children }) {
     }
   }, []);
 
-  // ============================
-  // BACKEND: MENSAJES (CRUD)
-  // ============================
 
-  // CREATE: enviar mensaje nuevo a la conversación activa
   const sendMessage = useCallback(
     async (conversationId, text) => {
       if (!conversationId || !text?.trim()) return null;
@@ -215,10 +200,8 @@ export function ChatProvider({ children }) {
         text.trim()
       );
 
-      // lo agrego al array actual sin volver a pedir todo
       setActiveMessages((prev) => [...prev, created]);
 
-      // actualizo lastMessage en la lista de conversaciones
       setConversations((prevList) =>
         prevList.map((c) =>
           String(c._id) === String(conversationId)
@@ -236,19 +219,16 @@ export function ChatProvider({ children }) {
     []
   );
 
-  // UPDATE: editar mensaje ya creado
   const editMessageBackend = useCallback(
     async (messageId, newText) => {
       if (!messageId || !newText?.trim()) return;
 
-      // PUT /api/messages/:messageId
       const updated = await messagesService.edit(
         messageId,
         newText.trim()
       );
 
-      // IMPORTANTE:
-      // reflejar el texto NUEVO inmediatamente en activeMessages
+
       setActiveMessages((prev) =>
         prev.map((m) => {
           const mid = String(m._id || m.id);
@@ -264,7 +244,7 @@ export function ChatProvider({ children }) {
         })
       );
 
-      // si justo este mensaje era el último en la conversación, también actualizo lastMessage
+      
       setConversations((prevList) =>
         prevList.map((c) => {
           const lastId =
@@ -286,13 +266,11 @@ export function ChatProvider({ children }) {
     []
   );
 
-  // DELETE: borrar mensaje
   const deleteMessageBackend = useCallback(async (messageId) => {
     if (!messageId) return false;
 
-    await messagesService.remove(messageId); // DELETE /api/messages/:messageId
+    await messagesService.remove(messageId); 
 
-    // lo saco de activeMessages
     setActiveMessages((prev) =>
       prev.filter(
         (m) => String(m._id || m.id) !== String(messageId)
@@ -302,11 +280,7 @@ export function ChatProvider({ children }) {
     return true;
   }, []);
 
-  // ============================
-  // LEGACY: acciones locales
-  // ============================
 
-  // borrar mensaje en el modo "mock" local
   const eliminarMensaje = useCallback(
     (id) => {
       if (!contactoActivo) return;
@@ -322,7 +296,6 @@ export function ChatProvider({ children }) {
     [contactoActivo]
   );
 
-  // enviar mensaje en legacy y (si hay conversación activa) también persistirlo en backend
   const agregarMensaje = useCallback(
     async (event) => {
       event?.preventDefault?.();
@@ -352,7 +325,6 @@ export function ChatProvider({ children }) {
         }));
       }
 
-      // persistir en backend si estoy en una conversación real
       if (activeConversationId) {
         try {
           await sendMessage(activeConversationId, texto);
@@ -361,19 +333,12 @@ export function ChatProvider({ children }) {
         }
       }
 
-      // limpiar form si vino de submit real
       if (event?.target?.reset) event.target.reset();
     },
     [contactoActivo, activeConversationId, sendMessage]
   );
 
-  // ============================
-  // DATOS DERIVADOS
-  // ============================
 
-  // lo que la UI de chat muestra como "lista de mensajes actual"
-  // si hay conversación activa en backend → usamos activeMessages (DB)
-  // si NO hay conversación activa → usamos el mock local (por contactoActivo)
   const visibleMessages = useMemo(() => {
     if (activeConversationId) {
       return activeMessages;
@@ -384,31 +349,27 @@ export function ChatProvider({ children }) {
     return [];
   }, [activeConversationId, activeMessages, contactoActivo, messages]);
 
-  // ============================
-  // VALUE QUE VA AL CONTEXTO
-  // ============================
+
   const value = {
     // backend real
     conversations,
     activeConversationId,
     fetchingConversations,
     fetchingMessages,
-    activeMessages, // array crudo de la conv activa
+    activeMessages, 
     loadConversations,
     selectConversation,
     loadMessages,
     sendMessage,
-    editMessageBackend, // <- acá está la edición en vivo
+    editMessageBackend, 
     deleteMessageBackend,
 
-    // legacy
     messages,
     contactoActivo,
     setContactoActivo,
     eliminarMensaje,
     agregarMensaje,
 
-    // lo que pinta la UI final
     visibleMessages,
   };
 

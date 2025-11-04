@@ -1,4 +1,3 @@
-// src/Components/ContactList/ContactsList.jsx
 import React, { useContext, useState } from "react";
 import ContactItem from "../ContactItem/ContactItem";
 import { ContactContext } from "../../Context/ContactContext";
@@ -14,32 +13,22 @@ const ContactsList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
-  // Filtrar contactos locales por nombre
   const filteredContacts = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // (Hoy no estás mostrando conversations del backend visualmente;
-  // si en el futuro querés mezclarlas o usarlas, acá ya tenés "conversations")
-  // const filteredConversations = conversations.filter((conv) =>
-  //   conv._id.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
+
 
   const handleLogoutClick = async () => {
     // 1. borrar token
     await authService.logout();
 
-    // 2. (opcional) podrías limpiar estados globales ChatContext si querés:
-    //    setContactoActivo(null); selectConversation(null); etc.
-    //    pero no lo toco ahora para no romper nada tuyo.
-
-    // 3. navegar a login
+   
     navigate("/login", { replace: true });
   };
 
   return (
     <div className="contacts-list-container">
-      {/* Header */}
       <div className="contacts-header">
         <h3 className="app-title">Whatsapp</h3>
         <button className="menu-button">
@@ -78,7 +67,7 @@ const ContactsList = () => {
         name="Cerrar sesión"
         id="logout"
         last_time_connected=""
-        img={null} // usa el fallback del componente
+        img={null} 
         last_message="Salir de la cuenta actual"
         unread_messages={0}
       />

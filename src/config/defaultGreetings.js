@@ -1,5 +1,4 @@
-// Mapa: participantUserId (del contacto) => texto del primer mensaje
-// Usá los ObjectId REALES de tus contactos (los mismos que ya pusiste en participantsMap)
+
 export default {
   "68f562223fecc550618f59d9": "Uno no es lo que es por lo que escribe, sino por lo que ha leído.",
   "68f5624b3fecc550618f59dc": "Lo malo es eso que llaman despertarse. ",

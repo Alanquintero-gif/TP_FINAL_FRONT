@@ -3,7 +3,6 @@ import { ChatContext } from "../../Context/ChatContext";
 import Message from "./Message";
 import "./Messages.css";
 
-// util para mostrar la hora
 function formatHHMM(dateStr) {
   try {
     const d = new Date(dateStr);
@@ -14,13 +13,10 @@ function formatHHMM(dateStr) {
   }
 }
 
-// normalizamos cada mensaje a la forma que tu UI espera:
-// { id, texto, hora, emisor, status }
+
 function normalizeMessage(raw) {
-  // id del mensaje
   const id = raw._id || raw.id;
 
-  // texto del mensaje
   const texto =
     raw.text ||
     raw.texto ||
@@ -28,15 +24,11 @@ function normalizeMessage(raw) {
     raw.content ||
     "" ;
 
-  // hora (o la que ya venga si es mock)
   const hora =
     raw.hora ||
     formatHHMM(raw.createdAt || raw.timestamp || Date.now());
 
-  // quién lo mandó
-  // En los mocks vos usás "YO" y "USUARIO".
-  // En backend quizás venga info distinta.
-  // Vamos a intentar inferir "YO".
+
   const soyYo =
     raw.emisor === "YO" ||
     raw.fromMe === true ||
@@ -46,7 +38,6 @@ function normalizeMessage(raw) {
 
   const emisor = soyYo ? "YO" : "USUARIO";
 
-  // estado (para el puntito de color que ya tenés)
   const status = raw.status || "visto";
 
   return {
@@ -80,32 +71,26 @@ function EmptyChat() {
 function Messages() {
   const {
     // del contexto nuevo
-    visibleMessages,            // <- array ya resuelto (activeMessages o mock)
-    activeConversationId,       // si hay conv backend activa
-    deleteMessageBackend,       // borrar en backend
-    editMessageBackend,         // editar en backend
+    visibleMessages,            
+    activeConversationId,       
+    deleteMessageBackend,       
+    editMessageBackend,         
 
-    // legacy para modo mock
-    eliminarMensaje,            // borrar local mock
+    eliminarMensaje,            
   } = useContext(ChatContext);
 
-  // normalizamos TODOS los mensajes que vamos a mostrar
   const list = useMemo(() => {
     return (visibleMessages || []).map(normalizeMessage);
   }, [visibleMessages]);
 
-  // handler para eliminar mensaje (decide si es backend o mock)
   const handleEliminar = (id) => {
     if (activeConversationId) {
-      // estoy en conversación real (DB)
       deleteMessageBackend?.(id);
     } else {
-      // estoy en contacto mock
       eliminarMensaje?.(id);
     }
   };
 
-  // handler para editar mensaje (sólo tiene sentido si estamos en backend)
   const handleEditar = (id, newText) => {
     if (!activeConversationId) return; // en mock no editamos
     editMessageBackend?.(id, newText);
@@ -123,7 +108,6 @@ function Messages() {
           message={message}
           eliminarMensaje={handleEliminar}
           editarMensaje={handleEditar}
-          // le pasamos si se puede editar (solo "YO" y solo si hay conv backend)
           canEdit={message.emisor === "YO" && !!activeConversationId}
         />
       ))}
